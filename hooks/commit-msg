@@ -1,0 +1,35 @@
+#!/bin/bash
+
+LANG_FILE=".commit-lang"
+COMMIT_MSG_FILE=$1
+RAW_MSG=$(head -n1 "$COMMIT_MSG_FILE")
+
+# Ignora commits automáticos como merge, revert ou fixup
+if echo "$RAW_MSG" | grep -Eq '^(merge|revert|fixup|squash)'; then
+  exit 0
+fi
+
+# Verifica se existe o arquivo de configuração
+if [ ! -f "$LANG_FILE" ]; then
+  echo "❌ Arquivo .commit-lang não encontrado. Crie um com idioma e verbos permitidos."
+  exit 1
+fi
+
+# Lê idioma e verbos do arquivo
+LANG=$(head -n1 "$LANG_FILE")
+VERBOS=$(tail -n +2 "$LANG_FILE")
+
+# Extrai o primeiro verbo após os dois-pontos
+INICIO=$(echo "$RAW_MSG" | cut -d':' -f2 | awk '{print $1}' | tr '[:upper:]' '[:lower:]')
+
+# Verifica se está entre os verbos permitidos
+echo "$VERBOS" | tr ' ' '\n' | grep -woq "$INICIO"
+
+if [ $? -ne 0 ]; then
+  echo "❌ O commit precisa começar com um verbo permitido para '$LANG'."
+  echo "🔹 Verbo usado: '$INICIO'"
+  echo "✅ Verbos válidos: $VERBOS"
+  exit 1
+fi
+
+exit 0

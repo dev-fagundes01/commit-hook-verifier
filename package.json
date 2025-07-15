@@ -1,0 +1,16 @@
+{
+  "name": "commit-hook-verifier",
+  "version": "1.0.0",
+  "description": "Commit hook verifier",
+  "main": "index.js",
+  "bin": {
+    "commit-hook-verifier": "./bin/install.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Diego Fagundes",
+  "license": "MIT",
+  "type": "commonjs"
+}
