@@ -44,6 +44,6 @@ git commit -m "feat(auth): adiciona verificação de token no login"
 git commit -m "feat(auth): validar login"
 ````
 ⛔ "validar" não está entre os verbos da lista.
----------------------------------------------------------------------------------------------------------
-### 🙌 Feito por Diego Fagundes
-Se curtiu o projeto, me dá um alô no <a href="https://portifolio-react-rosy.vercel.app/" rel="nofollow">LinkedIn</a> 😉
+<hr/>
+
+### Se curtiu o projeto, me dá um alô no <a href="https://portifolio-react-rosy.vercel.app/" rel="nofollow">LinkedIn</a> 😉
