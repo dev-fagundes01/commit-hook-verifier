@@ -9,6 +9,7 @@ const hookFile = path.join(__dirname, '../hooks/commit-msg');
 const args = process.argv.slice(2);
 
 const isGlobal = args.includes('--global');
+const visible = args.includes('--visible'); // <-- NOVO: não oculta o .commit-lang
 const initLangArg = args.find(arg => arg.startsWith('--init-lang='));
 const langToInit = initLangArg ? initLangArg.split('=')[1] : null;
 
@@ -22,7 +23,7 @@ if (!fs.existsSync(hookFile)) {
   process.exit(1);
 }
 
-// Cria o .commit-lang automaticamente se solicitado
+// ✅ Cria o .commit-lang se solicitado e não existir
 if (langToInit) {
   if (!VERBOS[langToInit]) {
     console.error(`❌ Idioma "${langToInit}" não suportado.`);
@@ -37,7 +38,7 @@ if (langToInit) {
     fs.writeFileSync(targetFile, fileContent);
     console.log(`✅ Arquivo .commit-lang criado com idioma "${langToInit}"`);
   } else {
-    console.log('⚠️  Arquivo .commit-lang já existe. Nenhuma alteração feita.');
+    console.log('ℹ️  Arquivo .commit-lang já existe. Nenhuma alteração feita.');
   }
 }
 
@@ -69,15 +70,20 @@ if (isGlobal) {
   console.log('✅ Hook instalado no projeto com sucesso.');
 }
 
-const excludePath = path.join(process.cwd(), '.git/info/exclude');
-try {
-  const current = fs.readFileSync(excludePath, 'utf8');
-  if (!current.includes('.commit-lang')) {
-    fs.appendFileSync(excludePath, '\n# Ignore local commit-lang config\n.commit-lang\n');
-    console.log('📁 .commit-lang adicionado ao .git/info/exclude');
-  } else {
-    console.log('📁 .commit-lang já estava no .git/info/exclude');
+// ✅ Só adiciona ao exclude se NÃO for --visible
+if (!visible) {
+  const excludePath = path.join(process.cwd(), '.git/info/exclude');
+  try {
+    const current = fs.readFileSync(excludePath, 'utf8');
+    if (!current.includes('.commit-lang')) {
+      fs.appendFileSync(excludePath, '\n# Ignore local commit-lang config\n.commit-lang\n');
+      console.log('📁 .commit-lang adicionado ao .git/info/exclude');
+    } else {
+      console.log('📁 .commit-lang já estava no .git/info/exclude');
+    }
+  } catch (error) {
+    console.warn('⚠️  Não foi possível adicionar .commit-lang ao exclude:', error.message);
   }
-} catch (error) {
-  console.warn('⚠️  Não foi possível adicionar .commit-lang ao exclude:', error.message);
+} else {
+  console.log('👀 --visible usado: .commit-lang será visível e pode ser versionado.');
 }
