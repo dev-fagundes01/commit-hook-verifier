@@ -1,12 +1,15 @@
 {
   "name": "commit-hook-verifier",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Commit hook verifier",
   "main": "index.js",
   "bin": {
     "commit-hook-verifier": "./bin/install.js"
   },
   "scripts": {
+    "publish-patch": "npm version patch && npm publish", //"version": "1.0.0" -> "version": "1.0.1"
+    "publish-minor": "npm version minor && npm publish", //"version": "1.0.1" -> "version": "1.1.0"
+    "publish-major": "npm version major && npm publish", //"version": "1.1.0" -> "version": "2.0.0"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
