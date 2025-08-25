@@ -81,12 +81,11 @@ git commit -m "feat(auth): validar login"
 <hr/>
 
 ## 💡 Dicas para equipes
-• Use --init-lang + --visible na configuração inicial do projeto:
+• Use `--init-lang` + `--visible` na configuração inicial do projeto:
 ```
 npx commit-hook-verifier --init-lang=en --visible
 git add .commit-lang
 git commit -m "chore: add commit verification config"
-
 ```
 • Para novos integrantes, basta:
 ```
