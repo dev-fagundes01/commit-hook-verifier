@@ -23,15 +23,15 @@ npx commit-hook-verifier --global
 
 Requer que você rode `git init` em cada novo projeto para aplicar o template.
 
-### 🏁 Inicialização com idioma automático
-Você pode gerar automaticamente o arquivo .commit-lang com o idioma desejado usando a flag --init-lang:
+## 🏁 Inicialização com idioma automático
+Você pode gerar automaticamente o arquivo `.commit-lang` com o idioma desejado usando a flag `--init-lang:`
 
 ```
 npx commit-hook-verifier --init-lang=pt
 ```
 
-### ⚙️ Arquivo .commit-lang
-O hook valida os commits baseado em um arquivo .commit-lang na raiz do repositório. Exemplo:
+### ⚙️ Arquivo `.commit-lang`
+O hook valida os commits baseado em um arquivo `.commit-lang` na raiz do repositório. Exemplo:
 ```
 pt
 adiciona corrige remove atualiza refatora melhora ajusta implementa
@@ -45,14 +45,22 @@ add fix remove update refactor improve adjust implement
 >A primeira linha define o idioma (`pt` ou `en`) <br/>
 >As demais linhas definem os verbos permitidos no início da mensagem de commit
 
-### 🙈 Exclusão automática do `.commit-lang`
-Para evitar que esse arquivo seja versionado, o `commit-hook-verifier` adiciona automaticamente o `.commit-lang` ao `.git/info/exclude`.
+### 👀 Tornar `.commit-lang` visível (para versionar)
+Por padrão, o arquivo `.commit-lang` é ignorado via `.git/info/exclude.`
 
-Isso garante:
+Para deixá-lo visível e versionar (ideal para equipes):
+```
+npx commit-hook-verifier --init-lang=en --visible
+```
+Depois, faça commit desse arquivo para que outros devs tenham o padrão.
 
-✅ Personalização local sem afetar outros colaboradores
-✅ Evita subir acidentalmente o arquivo ao repositório
-✅ Comportamento semelhante ao `.gitignore`, mas local
+### 🔄 Caso o arquivo já exista
+Se `.commit-lang` já está no repositório, basta instalar o hook:
+```
+npx commit-hook-verifier
+
+```
+Nenhum arquivo será sobrescrito.
 
 ## ✅ Regras aplicadas
 • O commit deve seguir o padrão Conventional Commits. <br/>
@@ -72,5 +80,18 @@ git commit -m "feat(auth): validar login"
 ⛔ "validar" não está entre os verbos da lista.
 <hr/>
 
-### 🙋‍♂️ Dúvidas ou sugestões?
-Se curtiu o projeto, me dá um alô no <a href="https://portifolio-react-rosy.vercel.app/" rel="nofollow">LinkedIn</a> 😉
+## 💡 Dicas para equipes
+• Use --init-lang + --visible na configuração inicial do projeto:
+```
+npx commit-hook-verifier --init-lang=en --visible
+git add .commit-lang
+git commit -m "chore: add commit verification config"
+
+```
+• Para novos integrantes, basta:
+```
+npx commit-hook-verifier
+```
+
+## 🙋‍♂️ Dúvidas ou sugestões?
+Se curtiu o projeto, me dá um alô no <a href="https://www.linkedin.com/in/diego-fagundes-da-silva/" rel="nofollow">LinkedIn</a> 😉
